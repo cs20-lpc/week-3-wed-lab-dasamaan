@@ -10,16 +10,50 @@ LinkedList<T>::~LinkedList() {
 template <typename T>
 void LinkedList<T>::append(const T& elem) {
     // TODO
+    Node* newNode = new Node(elem);
+
+    if (head == nullptr) {
+        head = newNode;
+    }
+    else {
+        Node* curr = head;
+        while (curr->next != nullptr) {
+            curr = curr->next;
+        }
+        curr->next = newNode;
+    }
+
+    this->length++;
 }
 
 template <typename T>
 void LinkedList<T>::clear() {
     // TODO
+    Node* curr = head;
+
+    while (curr != nullptr) {
+        Node* temp = curr;
+        curr = curr->next;
+        delete temp;
+    }
+
+    head = nullptr;
+    this->length = 0;
 }
 
 template <typename T>
 T LinkedList<T>::getElement(int position) const {
     // TODO
+    if (position < 0 || position >= this->length) {
+        throw string("getElement: position out of bounds");
+    }
+
+    Node* curr = head;
+    for (int i = 0; i < position; i++) {
+        curr = curr->next;
+    }
+
+    return curr->value;
 }
 
 template <typename T>
@@ -35,6 +69,16 @@ bool LinkedList<T>::isEmpty() const {
 template <typename T>
 void LinkedList<T>::replace(int position, const T& elem) {
     // TODO
+    if (position < 0 || position >= this->length) {
+        throw string("replace: position out of bounds");
+    }
+
+    Node* curr = head;
+    for (int i = 0; i < position; i++) {
+        curr = curr->next;
+    }
+
+    curr->value = elem;
 }
 
 template <typename T>
